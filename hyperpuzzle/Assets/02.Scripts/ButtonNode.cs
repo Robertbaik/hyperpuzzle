@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class ButtonNode : MonoBehaviour
 {
@@ -14,11 +15,22 @@ public class ButtonNode : MonoBehaviour
     public ButtonNode rightNode = null;
     public ButtonNode leftNode = null;
 
-    public Button btn;
+    public float test;
+
+    public Button button;
+    public TextMeshProUGUI textMesh;
+
+    public Transform pos;
+    
     void Start()
     {
-        btn = GetComponent<Button>();
-        btn.onClick.AddListener(Onclick_Button);
+        button = GetComponent<Button>();
+        textMesh = this.GetComponentInChildren<TextMeshProUGUI>();
+        button.onClick.AddListener(Onclick_Button);
+
+        textMesh.fontSize = 100;
+        SetNameIdx(idx);
+        
     }
 
     // Update is called once per frame
@@ -29,7 +41,12 @@ public class ButtonNode : MonoBehaviour
 
     public void Onclick_Button()
     {
-        transform.DOMoveX(2, 1);
+        transform.DOMoveX(test, 1);
         Debug.Log($"Onclick : {transform.name}");
+    }
+
+    public void SetNameIdx(int num)
+    {
+        textMesh.text = num.ToString();
     }
 }

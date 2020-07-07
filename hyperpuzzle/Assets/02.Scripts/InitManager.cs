@@ -3,50 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class Node
-{
-    public int xPos;
-    public int yPos;
-
-    public int idx;
-
-    public Node rightNode;
-    public Node leftNode;
-
-    public Node(int i)
-    {
-        idx = i;
-    }
-}
 
 public class InitManager : MonoBehaviour
 {
-    public int gameLevel;
-    public GameObject blockBtn;
-    void Start()
+    public int gameLevel = 3;
+    public GridLayoutGroup grid;
+    public GameObject buttonObj;
+    public ButtonNode[] buttonNodes;
+    
+    private void Start()
     {
-        InitGameLevel(gameLevel);
-    }
+        grid = GetComponent<GridLayoutGroup>();
+        grid.constraintCount = gameLevel;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        buttonNodes = new ButtonNode[gameLevel * gameLevel];
 
-    public void InitGameLevel(int level)
-    {
-        for (int i = 0; i < level*level; i++)
+        for (int i = 0; i < buttonNodes.Length; i++)
         {
-            Node node = new Node(i);
-            InitBtnObj(node);
+            int idx = i + 1;
+
+            GameObject obj = Instantiate(buttonObj) as GameObject;
+            obj.transform.SetParent(this.transform);
+            obj.transform.name = idx.ToString();
+            buttonNodes[i] = obj.GetComponent<ButtonNode>();
+            buttonNodes[i].idx = idx;
         }
-    }
-
-    public void InitBtnObj(Node node)
-    {
-
     }
 
 }
